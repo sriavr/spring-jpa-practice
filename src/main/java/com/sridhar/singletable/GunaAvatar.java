@@ -1,5 +1,8 @@
 package com.sridhar.singletable;
 
+import com.sridhar.common.Yoni;
+import com.sridhar.common.Yuga;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -7,8 +10,12 @@ import javax.persistence.Entity;
 @DiscriminatorValue("guna-avatar")
 public class GunaAvatar extends Avatar {
 
-    public GunaAvatar(String gunaAvatarName) {
+    public GunaAvatar(){}
+
+    public GunaAvatar(String gunaAvatarName, Yuga yuga, Yoni yoni) {
         this.gunaAvatarName = gunaAvatarName;
+        this.yuga = yuga;
+        this.yoni = yoni;
     }
 
     private String gunaAvatarName;

@@ -1,5 +1,7 @@
 package com.sridhar.singletable;
 
+import com.sridhar.common.CommonProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +11,7 @@ import javax.persistence.*;
         name="avatartype",
         discriminatorType=DiscriminatorType.STRING
 )
-public abstract class Avatar {
+public abstract class Avatar extends CommonProperties {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +20,5 @@ public abstract class Avatar {
     public Long getAvatarId() {
         return avatarId;
     }
-
 
 }
