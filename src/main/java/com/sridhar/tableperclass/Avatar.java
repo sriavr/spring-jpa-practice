@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Avatar {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long avatarId;
 
     public Long getAvatarId() {
