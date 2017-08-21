@@ -6,10 +6,10 @@ spring:
   datasource:
       driverClassName: com.mysql.jdbc.Driver
       name: testdb
-      url: jdbc:mysql://localhost:3306/test
+      url: jdbc:mysql://localhost:3306/hibernate_schema
       username: root
       password: rama123
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQLDialect
-      ddlAuto: create-drop
+      ddlAuto: update
