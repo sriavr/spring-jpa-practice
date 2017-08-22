@@ -40,8 +40,8 @@ public class Temple {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "temple_donors_list",
-            joinColumns = @JoinColumn(name="temple_temple_id", referencedColumnName = "templeId"),
-            inverseJoinColumns = @JoinColumn(name="donors_list_person_id", referencedColumnName = "personId")
+            joinColumns = @JoinColumn(name="ttdlst_temple_id", referencedColumnName = "templeId"),
+            inverseJoinColumns = @JoinColumn(name="tdlst_person_id", referencedColumnName = "personId")
     )
     private List<Person> donorsList;
 
