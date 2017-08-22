@@ -24,7 +24,8 @@ public class Temple {
     @Embedded
     private Address templeAddress;
 
-    @OneToOne
+    @OneToOne(targetEntity = Person.class, cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+    @JoinColumn
     private Person president;
 
     @OneToOne
@@ -36,7 +37,12 @@ public class Temple {
     @OneToMany
     private List<Activity> activityList;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "temple_donors_list",
+            joinColumns = @JoinColumn(name="temple_temple_id", referencedColumnName = "templeId"),
+            inverseJoinColumns = @JoinColumn(name="donors_list_person_id", referencedColumnName = "personId")
+    )
     private List<Person> donorsList;
 
     @ManyToOne

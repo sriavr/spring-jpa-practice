@@ -12,4 +12,4 @@ spring:
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQLDialect
-      ddlAuto: create-drop
+      ddlAuto: update

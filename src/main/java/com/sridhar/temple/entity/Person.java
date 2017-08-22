@@ -4,7 +4,7 @@ package com.sridhar.temple.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="person", uniqueConstraints = {@UniqueConstraint(columnNames = {"emailAddress"})})
+@Table(name="person")
 public class Person {
     @Id
     @GeneratedValue
