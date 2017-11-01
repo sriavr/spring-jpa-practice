@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Clob;
 import java.util.List;
 import java.util.Set;
 
@@ -46,8 +47,12 @@ public class Profile {
     private List<Address> addressList;
 
     //Entity type
-    @ElementCollection(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Person> personList;
+
+    @Lob
+    private Clob comments;
+
 
     public Profile() {
     }
@@ -118,5 +123,13 @@ public class Profile {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public Clob getComments() {
+        return comments;
+    }
+
+    public void setComments(Clob comments) {
+        this.comments = comments;
     }
 }
