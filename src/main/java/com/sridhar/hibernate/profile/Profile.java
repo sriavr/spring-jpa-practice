@@ -53,7 +53,6 @@ public class Profile {
     @Lob
     private Clob comments;
 
-
     public Profile() {
     }
 

@@ -16,12 +16,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -150,7 +150,7 @@ public class ProfileRepositoryIT {
                     logger.info(line);
                 }
             }
-            logger.info("profile.getComments() = " + profile.getComments());
+            logger.info("profile.getCommentsLobStr() = " + profile.getComments());
         }
     }
 
