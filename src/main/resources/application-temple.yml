@@ -4,12 +4,12 @@ spring:
   application:
     name: Hibernate Demo
   datasource:
-      driverClassName: com.mysql.jdbc.Driver
+      driverClassName: oracle.jdbc.OracleDriver
       name: testdb
-      url: jdbc:mysql://localhost:3306/hibernate_schema
-      username: root
-      password: rama123
+      url: jdbc:oracle:thin:@localhost:49161:xe
+      username: system
+      password: oracle
   jpa:
     hibernate:
-      dialect: org.hibernate.dialect.MySQLDialect
+      dialect: org.hibernate.dialect.Oracle10gDialect
       ddlAuto: update
