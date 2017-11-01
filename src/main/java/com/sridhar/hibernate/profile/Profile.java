@@ -1,14 +1,14 @@
 package com.sridhar.hibernate.profile;
 
-import org.apache.commons.lang3.StringUtils;
+import com.sridhar.temple.entity.Person;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Profile {
@@ -25,8 +25,29 @@ public class Profile {
     @Type(type="yes_no")
     private boolean isHidden;
 
+    /*
+    @ElementCollection is mainly for mapping non-entities (embeddable or basic)
+    while @OneToMany is used to map entities.
+
+    It also means that the elements are completely owned by the containing entities:
+    they're modified when the entity is modified, deleted when the entity is deleted, etc.
+    They can't have their own lifecycle.
+     */
+
+    //value type
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="profile_tags", joinColumns=@JoinColumn(name="id"))
+    @Column(name="tag_name")
     private List<String> tagList;
+
+    //Embeddable type
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<Address> addressList;
+
+    //Entity type
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<Person> personList;
 
     public Profile() {
     }
@@ -76,6 +97,22 @@ public class Profile {
 
     public void setTagList(List<String> tagList) {
         this.tagList = tagList;
+    }
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+
+    public Set<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(Set<Person> personList) {
+        this.personList = personList;
     }
 
     @Override

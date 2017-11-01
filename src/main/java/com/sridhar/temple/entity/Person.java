@@ -1,6 +1,8 @@
 package com.sridhar.temple.entity;
 
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 
 @Entity
@@ -43,5 +45,10 @@ public class Person {
 
     public void setPermanentAddress(Address permanentAddress) {
         this.permanentAddress = permanentAddress;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

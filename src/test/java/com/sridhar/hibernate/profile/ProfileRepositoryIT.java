@@ -1,7 +1,9 @@
 package com.sridhar.hibernate.profile;
 
 import com.sridhar.Application;
-import org.hibernate.Hibernate;
+import com.sridhar.temple.entity.Address;
+import com.sridhar.temple.entity.Person;
+import com.sridhar.temple.repository.PersonRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -10,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RunWith(SpringRunner.class)
@@ -22,11 +23,23 @@ public class ProfileRepositoryIT {
     @Autowired
     ProfileRepository profileRepository;
 
+    @Autowired
+    PersonRepository personRepository;
+
     @Test
     public void testSaveProfile(){
         Long randomId = ThreadLocalRandom.current().nextLong(100, 1000);
         Profile profile = new Profile(randomId, UUID.randomUUID().toString(), true, false);
         profileRepository.save(profile);
+    }
+
+
+    @Test
+    public void testFindAllProfiles(){
+        Iterable<Profile> profileIterable = profileRepository.findAll();
+        for (Profile profile : profileIterable) {
+            logger.info(profile.toString());
+        }
     }
 
     @Test
@@ -35,14 +48,6 @@ public class ProfileRepositoryIT {
         Profile profile = new Profile(randomId, UUID.randomUUID().toString(), true, false);
         profile.setTagList(Arrays.asList(UUID.randomUUID().toString(), UUID.randomUUID().toString()));
         profileRepository.save(profile);
-    }
-
-    @Test
-    public void testFindAllProfiles(){
-        Iterable<Profile> profileIterable = profileRepository.findAll();
-        for (Profile profile : profileIterable) {
-            logger.info(profile.toString());
-        }
     }
 
     @Test
@@ -55,4 +60,59 @@ public class ProfileRepositoryIT {
         }
     }
 
+
+    @Test
+    public void testSaveProfileWithAddresses(){
+        Long randomId = ThreadLocalRandom.current().nextLong(100, 1000);
+        Profile profile = new Profile(randomId, UUID.randomUUID().toString(), true, false);
+        profile.setTagList(Arrays.asList(UUID.randomUUID().toString(), UUID.randomUUID().toString()));
+
+        List<Address> addressList = new ArrayList<>();
+        Address address1 = new Address();
+        address1.setCity("Goloka Vrindavan");
+        address1.setCountry("Vaikuntam");
+        address1.setState("Lakshmi Nivas");
+        address1.setStreet("hari nilayam");
+        addressList.add(address1);
+
+        Address address2 = new Address();
+        address2.setCity("Ayodhya");
+        address2.setCountry("Vaikuntam");
+        address2.setState("Sitha Pathy");
+        address2.setStreet("hari nilayam");
+        addressList.add(address2);
+
+        profileRepository.save(profile);
+    }
+
+    @Test
+    public void testSaveProfileWithPersons(){
+        Long randomId = ThreadLocalRandom.current().nextLong(100, 1000);
+        Profile profile = new Profile(randomId, UUID.randomUUID().toString(), true, false);
+        Person person1 = new Person();
+        person1.setFullName("Parthasarathy");
+        person1.setEmailAddress("heart@vaishnavas.com");
+        Address address1 = new Address();
+        address1.setCity("Goloka Vrindavan");
+        address1.setCountry("Vaikuntam");
+        address1.setState("Lakshmi Nivas");
+        address1.setStreet("hari nilayam");
+        person1.setPermanentAddress(address1);
+        personRepository.save(person1);
+        Set<Person> personSet = new HashSet<>();
+        personSet.add(person1);
+        profile.setPersonList(personSet);
+        profileRepository.save(profile);
+
+    }
+
+    @Test
+    public void testFindAllProfilesWithPersons(){
+        Iterable<Profile> profileIterable = profileRepository.findAll();
+        for (Profile profile : profileIterable) {
+            for(String tag: profile.getTagList()) {
+                logger.info(tag);
+            }
+        }
+    }
 }
